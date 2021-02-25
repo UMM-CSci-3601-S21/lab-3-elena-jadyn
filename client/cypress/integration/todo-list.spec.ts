@@ -17,13 +17,13 @@ describe('Todo list', () => {
     cy.get('#todos-owner-input').type('Blanche');
   });
 
-  it('Should type something in the category filter and check that it returned correct elements', () => {
-    // Filter for category 'homework'
+  it('Should type something in the body filter and check that it returned correct elements', () => {
+    // Filter for body has 'sunt'
     cy.get('#todos-body-input').type('sunt');
   });
 
-  it('Should type something partial in the category filter and check that it returned correct elements', () => {
-    // Filter for categories that contain 'de'
+  it('Should type something partial in the body filter and check that it returned correct elements', () => {
+    // Filter for body that contain 'in'
     cy.get('#todos-body-input').type('in');
   });
 
