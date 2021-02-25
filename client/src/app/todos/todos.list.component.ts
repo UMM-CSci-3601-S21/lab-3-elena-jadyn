@@ -3,12 +3,28 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { throwError } from 'rxjs';
 import { ToDo } from './todos';
 import { ToDosService } from './todos.service';
+import { MatButtonModule } from '@angular/material/button';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatIconModule } from '@angular/material/icon';
+import { MatListModule } from '@angular/material/list';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatCardModule } from '@angular/material/card';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatSelectModule } from '@angular/material/select';
+import { MatOptionModule } from '@angular/material/core';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatRadioModule } from '@angular/material/radio';
+
 
 @Component({
   selector: 'app-todo-list-component',
   templateUrl: 'todo-list.component.html',
-  styleUrls: ['./todo-list.component.scss'],
-  providers: []
+  styleUrls: ['./todo-list.component.scss']
 })
 
 export class ToDosListComponent implements OnInit {
@@ -17,10 +33,12 @@ export class ToDosListComponent implements OnInit {
   public filteredToDos: ToDo[];
 
   public todoOwner: string;
-  public todoStatus: boolean;
+  public todoStatus: string;
   public todoBody: string;
   public todoCategory: string;
-  public viewType: 'list';
+  public todoLimit: number;
+  public todoSort: string;
+
 
   //Inject the ToDosService into this component.
   //That's what happens in the following constructor.
@@ -34,9 +52,7 @@ export class ToDosListComponent implements OnInit {
   getToDosFromServer() {
     this.todosService.getToDos({
       owner: this.todoOwner,
-      status: this.todoStatus,
       body: this.todoBody,
-      category: this.todoCategory,
     }).subscribe(returnedToDos => {
       this.serverFilteredToDos = returnedToDos;
       this.updateFilter();
@@ -53,7 +69,20 @@ export class ToDosListComponent implements OnInit {
 
   public updateFilter() {
     this.filteredToDos = this.todosService.filterToDos(
-      this.serverFilteredToDos, { owner: this.todoOwner, status: this.todoStatus, body: this.todoBody, category: this.todoCategory});
+      this.serverFilteredToDos, { status: this.getStatus(), category: this.todoCategory })
+      .slice(0, this.todoLimit);
+
+      if(this.todoSort !== undefined){
+        this.filteredToDos = this.filteredToDos.sort((first, second) => {
+          const firstValue  = first[this.todoSort];
+          const secondValue = second[this.todoSort];
+          return firstValue === secondValue ? 0 : firstValue > secondValue ? 1 : -1;
+        });
+      }
+  }
+  public getStatus() {
+    const result = this.todoStatus !== undefined ? this.todoStatus === 'complete' : undefined;
+    return result;
   }
 
   /**

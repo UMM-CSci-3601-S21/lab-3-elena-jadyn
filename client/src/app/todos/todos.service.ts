@@ -8,9 +8,9 @@ import { ToDo } from './todos';
 export class ToDosService {
   readonly todoUrl: string = environment.apiUrl + 'todos';
 
-  constructor(private httpClient: HttpClient) {}
+  constructor(private httpClient: HttpClient) { }
 
-  getToDos(filters?: { owner?: string; status?: boolean; body?: string; category?: string}): Observable<ToDo[]> {
+  getToDos(filters?: { owner?: string; status?: boolean; body?: string; category?: string }): Observable<ToDo[]> {
     let httpParams: HttpParams = new HttpParams();
 
     if (filters) {
@@ -36,7 +36,7 @@ export class ToDosService {
     return this.httpClient.get<ToDo>(this.todoUrl + '/' + id);
   }
 
-  filterToDos(todos: ToDo[], filters: { owner?: string; status?: boolean; body?: string; category?: string}): ToDo[] {
+  filterToDos(todos: ToDo[], filters: { owner?: string; status?: boolean; body?: string; category?: string }): ToDo[] {
 
     let filteredToDos = todos;
 
@@ -48,8 +48,8 @@ export class ToDosService {
     }
 
     //Filter by status
-    if (filters.status) {
-      filteredToDos = filteredToDos.filter(todo => todo.status = filters.status);
+    if (filters.status !== undefined) {
+      filteredToDos = filteredToDos.filter(todo => todo.status === filters.status);
     }
 
     //Filter by body
