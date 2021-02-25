@@ -65,15 +65,15 @@ describe('TodosListComponent', () => {
     expect(toDosList.serverFilteredToDos.length).toBe(3);
   });
 
-  it('contains a user named "Fry"', () => {
+  it('contains a todo has owner named "Fry"', () => {
     expect(toDosList.serverFilteredToDos.some((toDo: ToDo) => toDo.owner === 'Fry')).toBe(true);
   });
 
-  it('contains a user named "Blanche"', () => {
+  it('contains a todo has owner named "Blanche"', () => {
     expect(toDosList.serverFilteredToDos.some((toDo: ToDo) => toDo.owner === 'Blanche')).toBe(true);
   });
 
-  it('doesn\'t contain a user named "Jessica"', () => {
+  it('doesn\'t contain a todo has owner named "Jessica"', () => {
     expect(toDosList.serverFilteredToDos.some((toDo: ToDo) => toDo.owner === 'Jessica')).toBe(false);
   });
 
