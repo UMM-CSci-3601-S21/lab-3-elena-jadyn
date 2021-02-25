@@ -1,0 +1,103 @@
+<div fxLayout="row">
+  <div fxFlex fxFlex.gt-sm="80" fxFlexOffset.gt-sm="10">
+
+    <mat-card class="search-card">
+      <mat-card-title class="todos-list-title">To Dos</mat-card-title>
+      <mat-card-content fxLayout="column" >
+
+        <div fxLayout="row wrap" fxLayoutGap="10px">
+          <!-- Filtering on the server -->
+
+          <mat-form-field class="input-field">
+            <mat-label>Owner</mat-label>
+            <input matInput id="todos-owner-input" placeholder="Filter by owner"
+            [(ngModel)]="todoOwner" (input)="getToDosFromServer()">
+            <mat-hint>Filtered on server</mat-hint>
+          </mat-form-field>
+
+          <mat-form-field class="input-field">
+            <mat-label>Body</mat-label>
+            <input matInput id="todos-body-input" placeholder="Filter by body"
+            [(ngModel)]="todoBody" (input)="getToDosFromServer()">
+            <mat-hint>Filtered on server</mat-hint>
+          </mat-form-field>
+
+          <!-- Filtering in Angular -->
+          <mat-form-field class="input-field">
+            <mat-label>Limit</mat-label>
+            <input matInput id="todo-limit-input" type="number" placeholder="Filter by limit"
+            min="0" max="200" [(ngModel)]="todoLimit" (input)="updateFilter()">
+            <mat-hint>Filtered on client</mat-hint>
+          </mat-form-field>
+
+        </div>
+
+        <div fxLayout="row wrap" fxLayoutGap="10px">
+          <!-- Filtering in Angular -->
+
+          <mat-form-field class="input-field">
+            <mat-label>Category</mat-label>
+            <mat-select (selectionChange)="updateFilter()" [(ngModel)]="todoCategory" data-test="todoCategorySelect">
+              <mat-option>--</mat-option>
+              <mat-option value="groceries">groceries</mat-option>
+              <mat-option value="homework">homework</mat-option>
+              <mat-option value="software design">software design</mat-option>
+              <mat-option value="video games">homework</mat-option>
+            </mat-select>
+            <mat-hint>Filtered on client</mat-hint>
+          </mat-form-field>
+
+          <mat-form-field class="input-field">
+            <mat-label>Status</mat-label>
+            <mat-select (selectionChange)="updateFilter()" [(ngModel)]="todoStatus" data-test="todoStatusSelect">
+              <mat-option>--</mat-option>
+              <mat-option value="complete">Complete</mat-option>
+              <mat-option value="incomplete">Incomplete</mat-option>
+            </mat-select>
+            <mat-hint>Filtered on client</mat-hint>
+          </mat-form-field>
+
+          <mat-form-field class="input-field">
+            <mat-label>SortBy</mat-label>
+            <mat-select (selectionChange)="updateFilter()" [(ngModel)]="todoSort" data-test="todoSortSelect">
+              <mat-option>--</mat-option>
+              <mat-option value="owner">owner</mat-option>
+              <mat-option value="status">status</mat-option>
+              <mat-option value="body">body</mat-option>
+              <mat-option value="category">category</mat-option>
+            </mat-select>
+            <mat-hint>Filtered on client</mat-hint>
+          </mat-form-field>
+
+        </div>
+
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>
+
+<div fxLayout="row">
+  <div fxFlex fxFlex.gt-sm="80" fxFlexOffset.gt-sm="10" *ngIf="serverFilteredToDos; else usersError" >
+    <mat-nav-list class="todo-nav-list">
+      <h3 mat-subheader>To Dos</h3>
+      <a mat-list-item *ngFor="let todo of this.filteredToDos" [routerLink]="['/todos', todo._id]" class="todo-list-item">
+        <h3 matLine class="todo-list-owner"> {{todo.owner}} </h3>
+        <p matLine class="todo-list-status"> {{this.todo.status ? 'Complete' : 'Incomplete'}} </p>
+      </a>
+    </mat-nav-list>
+  </div>
+  <!-- Error message. -->
+  <ng-template #usersError>
+    <div fxFlex fxFlex.gt-sm="80" fxFlexOffset.gt-sm="10" class="user-error">
+      <mat-error>
+        There was a problem loading the todos. Possibly the server is down or perhaps there are network
+        issues.
+      </mat-error>
+      <mat-error>
+        Please wait a bit and try again or start the server.
+      </mat-error>
+    </div>
+  </ng-template>
+
+</div>
+
