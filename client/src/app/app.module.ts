@@ -31,8 +31,12 @@ import { HttpClientModule } from '@angular/common/http';
 import { LayoutModule } from '@angular/cdk/layout';
 import { UserCardComponent } from './users/user-card.component';
 import { UserProfileComponent } from './users/user-profile.component';
+import { ToDosListComponent } from './todos/todos.list.component';
+import { ToDosService } from './todos/todos.service';
+import { ToDoCardComponent } from './todos/todo-card.component';
+import { ToDoProfileComponent } from './todos/todo-profile.component';
 
-const MATERIAL_MODULES: any[] = [
+export const MATERIAL_MODULES: any[] = [
   MatListModule,
   MatButtonModule,
   MatIconModule,
@@ -58,6 +62,9 @@ const MATERIAL_MODULES: any[] = [
     UserListComponent,
     UserCardComponent,
     UserProfileComponent,
+    ToDoCardComponent,
+    ToDoProfileComponent,
+    ToDosListComponent
   ],
   imports: [
     BrowserModule,
@@ -70,7 +77,8 @@ const MATERIAL_MODULES: any[] = [
     LayoutModule,
   ],
   providers: [
-    UserService
+    UserService,
+    ToDosService
   ],
   bootstrap: [AppComponent]
 })
