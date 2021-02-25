@@ -18,12 +18,12 @@ describe('Todo list', () => {
   });
 
   it('Should type something in the body filter and check that it returned correct elements', () => {
-    // Filter for category 'homework'
+    // Filter for body has 'sunt'
     cy.get('#todos-body-input').type('sunt');
   });
 
   it('Should type something partial in the body filter and check that it returned correct elements', () => {
-    // Filter for categories that contain 'de'
+    // Filter for body that contain 'in'
     cy.get('#todos-body-input').type('in');
   });
 
